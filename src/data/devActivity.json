@@ -1,56 +1,17 @@
 {
-  "generatedAt": "2026-09-07T08:45:52.344Z",
+  "generatedAt": "2026-09-28T10:15:42.147Z",
   "repository": {
     "owner": "GladysAssistant",
     "name": "Gladys",
     "url": "https://github.com/GladysAssistant/Gladys",
-    "stars": 3181,
-    "forks": 319,
-    "openIssues": 50,
+    "stars": 3205,
+    "forks": 321,
+    "openIssues": 44,
     "watchers": 72,
     "createdAt": "2015-06-05T11:10:33Z",
-    "pushedAt": "2026-09-05T08:34:03Z"
+    "pushedAt": "2026-09-28T10:12:15Z"
   },
   "weeks": [
-    {
-      "w": 1757808000,
-      "t": 0,
-      "d": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ]
-    },
-    {
-      "w": 1758412800,
-      "t": 4,
-      "d": [
-        0,
-        4,
-        0,
-        0,
-        0,
-        0,
-        0
-      ]
-    },
-    {
-      "w": 1759017600,
-      "t": 6,
-      "d": [
-        0,
-        2,
-        0,
-        0,
-        0,
-        4,
-        0
-      ]
-    },
     {
       "w": 1759622400,
       "t": 6,
@@ -677,10 +638,49 @@
     },
     {
       "w": 1788652800,
-      "t": 0,
+      "t": 3,
+      "d": [
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "w": 1789257600,
+      "t": 6,
       "d": [
         0,
         0,
+        0,
+        0,
+        0,
+        6,
+        0
+      ]
+    },
+    {
+      "w": 1789862400,
+      "t": 19,
+      "d": [
+        0,
+        16,
+        2,
+        0,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "w": 1790467200,
+      "t": 2,
+      "d": [
+        1,
+        1,
         0,
         0,
         0,
@@ -690,6 +690,40 @@
     }
   ],
   "releases": [
+    {
+      "tag": "v5.1.1",
+      "name": "v5.1.1",
+      "url": "https://github.com/GladysAssistant/Gladys/releases/tag/v5.1.1",
+      "publishedAt": "2026-09-22T06:25:12Z",
+      "prerelease": false,
+      "changes": 2,
+      "authors": [
+        "Pierre-Gilles",
+        "prohand"
+      ],
+      "highlights": [
+        "ci: replace removed cloudflare/pages-action with wrangler-action",
+        "fix(external-integration): make registerProxyService idempotent"
+      ]
+    },
+    {
+      "tag": "v5.1.0",
+      "name": "v5.1.0",
+      "url": "https://github.com/GladysAssistant/Gladys/releases/tag/v5.1.0",
+      "publishedAt": "2026-09-21T18:27:57Z",
+      "prerelease": false,
+      "changes": 24,
+      "authors": [
+        "Pierre-Gilles",
+        "William-De71",
+        "cicoub13"
+      ],
+      "highlights": [
+        "Publish each release to Gladys Plus from the release workflow",
+        "docs: recommend linking the forum topic or GitHub issue in pull requests",
+        "docs(api): publish the endpoints missing from the generated apidoc"
+      ]
+    },
     {
       "tag": "v5.0.4",
       "name": "v5.0.4",
@@ -865,66 +899,171 @@
         "Improve condition logic explanations in UI",
         "Add timeout and UI improvements to external integration device scan"
       ]
-    },
-    {
-      "tag": "v4.84.2",
-      "name": "v4.84.2",
-      "url": "https://github.com/GladysAssistant/Gladys/releases/tag/v4.84.2",
-      "publishedAt": "2026-08-02T16:01:28Z",
-      "prerelease": false,
-      "changes": 12,
-      "authors": [
-        "Pierre-Gilles",
-        "anupamme",
-        "Terdious"
-      ],
-      "highlights": [
-        "Fix external integration install on kernels without CPU CFS scheduler (Synology)",
-        "Fix /data ownership of external integration containers",
-        "Add workflow_dispatch to trigger Cursor automation webhooks"
-      ]
-    },
-    {
-      "tag": "v4.84.1",
-      "name": "v4.84.1",
-      "url": "https://github.com/GladysAssistant/Gladys/releases/tag/v4.84.1",
-      "publishedAt": "2026-08-01T16:14:12Z",
-      "prerelease": false,
-      "changes": 15,
-      "authors": [
-        "Pierre-Gilles",
-        "Terdious",
-        "William-De71"
-      ],
-      "highlights": [
-        "Add GitHub label automation (area labeler, LLM type classification) and PR template",
-        "Fix gateway backup OOM: bound DuckDB memory during the backup export",
-        "fix French plural: « tableaux de bord » (not « tableaux de bords »)"
-      ]
     }
   ],
-  "openPullRequestsCount": 42,
+  "openPullRequestsCount": 41,
   "openPullRequests": [
     {
-      "number": 3090,
-      "title": "Tag scenes created by AI",
-      "url": "https://github.com/GladysAssistant/Gladys/pull/3090",
+      "number": 3136,
+      "title": "Show the size of each feature's history on the device pages",
+      "url": "https://github.com/GladysAssistant/Gladys/pull/3136",
+      "author": "Pierre-Gilles",
+      "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
+      "labels": [
+        "type:feature",
+        "area:server",
+        "area:front"
+      ],
+      "createdAt": "2026-09-28T10:12:27Z",
+      "updatedAt": "2026-09-28T10:14:00Z",
+      "mergedAt": null
+    },
+    {
+      "number": 3135,
+      "title": "Flag verbose devices that fill the history on the devices page",
+      "url": "https://github.com/GladysAssistant/Gladys/pull/3135",
+      "author": "Pierre-Gilles",
+      "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
+      "labels": [
+        "type:feature",
+        "area:server",
+        "area:front"
+      ],
+      "createdAt": "2026-09-28T09:13:20Z",
+      "updatedAt": "2026-09-28T09:42:44Z",
+      "mergedAt": null
+    },
+    {
+      "number": 2988,
+      "title": "feat(thermostat): add a thermostat integration with dashboard widget",
+      "url": "https://github.com/GladysAssistant/Gladys/pull/2988",
+      "author": "William-De71",
+      "avatar": "https://avatars.githubusercontent.com/u/11477113?v=4",
+      "labels": [
+        "type:feature",
+        "area:server",
+        "area:front",
+        "area:integration",
+        "risk:high",
+        "needs:human-review",
+        "area:database"
+      ],
+      "createdAt": "2026-08-22T22:08:17Z",
+      "updatedAt": "2026-09-28T08:04:43Z",
+      "mergedAt": null
+    },
+    {
+      "number": 3130,
+      "title": "feat(energy): open energy contracts (spec, rule engine, contracts model and UI, integration capability)",
+      "url": "https://github.com/GladysAssistant/Gladys/pull/3130",
+      "author": "Pierre-Gilles",
+      "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
+      "labels": [
+        "type:feature",
+        "area:server",
+        "area:front",
+        "area:integration",
+        "risk:high",
+        "needs:human-review",
+        "area:database"
+      ],
+      "createdAt": "2026-09-22T14:44:02Z",
+      "updatedAt": "2026-09-27T12:45:16Z",
+      "mergedAt": null
+    },
+    {
+      "number": 3132,
+      "title": "ci: pin the third-party actions and scope the workflow tokens",
+      "url": "https://github.com/GladysAssistant/Gladys/pull/3132",
+      "author": "Totara-thib",
+      "avatar": "https://avatars.githubusercontent.com/u/78480448?v=4",
+      "labels": [
+        "type:chore",
+        "area:infra"
+      ],
+      "createdAt": "2026-09-25T12:20:00Z",
+      "updatedAt": "2026-09-25T12:44:18Z",
+      "mergedAt": null
+    },
+    {
+      "number": 2807,
+      "title": "feat(external-integration): calendar type — spec and milestone 1 implementation (B.19)",
+      "url": "https://github.com/GladysAssistant/Gladys/pull/2807",
+      "author": "Pierre-Gilles",
+      "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
+      "labels": [
+        "type:chore",
+        "area:server",
+        "area:front",
+        "area:integration",
+        "needs:human-review",
+        "area:database",
+        "claude:autofix-exhausted"
+      ],
+      "createdAt": "2026-08-07T16:04:08Z",
+      "updatedAt": "2026-09-18T12:35:42Z",
+      "mergedAt": null
+    },
+    {
+      "number": 2707,
+      "title": "Scene: propose instantaneous device values in \"Only continue if\" conditions",
+      "url": "https://github.com/GladysAssistant/Gladys/pull/2707",
+      "author": "Pierre-Gilles",
+      "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
+      "labels": [
+        "type:feature",
+        "area:server",
+        "area:front",
+        "area:integration",
+        "area:database",
+        "claude:autofix-exhausted"
+      ],
+      "createdAt": "2026-07-23T18:43:08Z",
+      "updatedAt": "2026-09-12T19:15:28Z",
+      "mergedAt": null
+    },
+    {
+      "number": 3105,
+      "title": "feat(alarm): one alarm code per person, hashed with bcrypt",
+      "url": "https://github.com/GladysAssistant/Gladys/pull/3105",
       "author": "cicoub13",
       "avatar": "https://avatars.githubusercontent.com/u/1773153?v=4",
       "labels": [
         "type:feature",
         "area:server",
+        "area:front",
         "area:integration",
-        "needs:human-review"
+        "risk:high",
+        "needs:human-review",
+        "area:database"
       ],
-      "createdAt": "2026-09-06T17:28:38Z",
-      "updatedAt": "2026-09-06T18:55:55Z",
+      "createdAt": "2026-09-12T13:14:16Z",
+      "updatedAt": "2026-09-12T17:46:18Z",
       "mergedAt": null
     },
     {
-      "number": 3089,
-      "title": "feat(sonos): migrate button + deprecated badge for the native integration",
-      "url": "https://github.com/GladysAssistant/Gladys/pull/3089",
+      "number": 3101,
+      "title": "feat(alarm): three arming modes — Presence, Night, Away",
+      "url": "https://github.com/GladysAssistant/Gladys/pull/3101",
+      "author": "cicoub13",
+      "avatar": "https://avatars.githubusercontent.com/u/1773153?v=4",
+      "labels": [
+        "type:feature",
+        "area:server",
+        "area:front",
+        "area:integration",
+        "risk:high",
+        "needs:human-review",
+        "area:database"
+      ],
+      "createdAt": "2026-09-10T08:43:19Z",
+      "updatedAt": "2026-09-10T09:48:33Z",
+      "mergedAt": null
+    },
+    {
+      "number": 3100,
+      "title": "feat(dashboard): allow forcing tablet mode via ?tabletmode=<house_selector> URL param",
+      "url": "https://github.com/GladysAssistant/Gladys/pull/3100",
       "author": "vincentBesseau",
       "avatar": "https://avatars.githubusercontent.com/u/33568805?v=4",
       "labels": [
@@ -932,42 +1071,25 @@
         "area:front",
         "needs:human-review"
       ],
-      "createdAt": "2026-09-05T18:18:31Z",
-      "updatedAt": "2026-09-05T19:07:53Z",
+      "createdAt": "2026-09-09T15:06:37Z",
+      "updatedAt": "2026-09-09T16:08:42Z",
       "mergedAt": null
     },
     {
-      "number": 3088,
-      "title": "fix(homekit): expose air conditioners as HeaterCooler so \"turn on\" keeps the mode",
-      "url": "https://github.com/GladysAssistant/Gladys/pull/3088",
+      "number": 2746,
+      "title": "Add TTS provider system with external integration support",
+      "url": "https://github.com/GladysAssistant/Gladys/pull/2746",
       "author": "Pierre-Gilles",
       "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
       "labels": [
-        "type:fix",
-        "area:integration",
-        "needs:human-review"
-      ],
-      "createdAt": "2026-09-04T19:00:32Z",
-      "updatedAt": "2026-09-05T08:42:16Z",
-      "mergedAt": null
-    },
-    {
-      "number": 3011,
-      "title": "chore(security): bump transitive deps to clear high/critical npm advisories",
-      "url": "https://github.com/GladysAssistant/Gladys/pull/3011",
-      "author": "Pierre-Gilles",
-      "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
-      "labels": [
-        "dependencies",
-        "type:chore",
+        "type:feature",
         "area:server",
         "area:front",
-        "area:integration",
         "risk:high",
         "needs:human-review"
       ],
-      "createdAt": "2026-08-26T05:17:08Z",
-      "updatedAt": "2026-09-05T05:27:27Z",
+      "createdAt": "2026-08-02T07:35:47Z",
+      "updatedAt": "2026-09-07T21:15:21Z",
       "mergedAt": null
     },
     {
@@ -1002,23 +1124,6 @@
       "mergedAt": null
     },
     {
-      "number": 2746,
-      "title": "Add TTS provider system with external integration support",
-      "url": "https://github.com/GladysAssistant/Gladys/pull/2746",
-      "author": "Pierre-Gilles",
-      "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
-      "labels": [
-        "type:feature",
-        "area:server",
-        "area:front",
-        "risk:high",
-        "needs:human-review"
-      ],
-      "createdAt": "2026-08-02T07:35:47Z",
-      "updatedAt": "2026-09-01T12:18:46Z",
-      "mergedAt": null
-    },
-    {
       "number": 2669,
       "title": "Server: harden container-managing services against container name collisions",
       "url": "https://github.com/GladysAssistant/Gladys/pull/2669",
@@ -1035,42 +1140,6 @@
       "mergedAt": null
     },
     {
-      "number": 2854,
-      "title": "chore(deps): security audit — apply non-breaking fixes for google-cast and mcp services",
-      "url": "https://github.com/GladysAssistant/Gladys/pull/2854",
-      "author": "Pierre-Gilles",
-      "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
-      "labels": [
-        "dependencies",
-        "type:chore",
-        "area:integration",
-        "risk:high",
-        "needs:human-review"
-      ],
-      "createdAt": "2026-08-12T05:19:26Z",
-      "updatedAt": "2026-08-31T18:48:33Z",
-      "mergedAt": null
-    },
-    {
-      "number": 2988,
-      "title": "feat(thermostat): add a thermostat integration with dashboard widget",
-      "url": "https://github.com/GladysAssistant/Gladys/pull/2988",
-      "author": "William-De71",
-      "avatar": "https://avatars.githubusercontent.com/u/11477113?v=4",
-      "labels": [
-        "type:feature",
-        "area:server",
-        "area:front",
-        "area:integration",
-        "risk:high",
-        "needs:human-review",
-        "area:database"
-      ],
-      "createdAt": "2026-08-22T22:08:17Z",
-      "updatedAt": "2026-08-29T12:38:22Z",
-      "mergedAt": null
-    },
-    {
       "number": 3045,
       "title": "feat(zigbee2mqtt): keep devices linked when renamed in Zigbee2mqtt",
       "url": "https://github.com/GladysAssistant/Gladys/pull/3045",
@@ -1083,249 +1152,190 @@
       "createdAt": "2026-08-28T09:42:15Z",
       "updatedAt": "2026-08-29T02:37:31Z",
       "mergedAt": null
-    },
-    {
-      "number": 3028,
-      "title": "Dashboard: add a tide widget for harbours worldwide",
-      "url": "https://github.com/GladysAssistant/Gladys/pull/3028",
-      "author": "William-De71",
-      "avatar": "https://avatars.githubusercontent.com/u/11477113?v=4",
-      "labels": [
-        "type:feature",
-        "area:server",
-        "area:front",
-        "needs:human-review",
-        "area:database"
-      ],
-      "createdAt": "2026-08-27T21:59:23Z",
-      "updatedAt": "2026-08-28T17:43:33Z",
-      "mergedAt": null
-    },
-    {
-      "number": 2707,
-      "title": "Scene: propose instantaneous device values in \"Only continue if\" conditions",
-      "url": "https://github.com/GladysAssistant/Gladys/pull/2707",
-      "author": "Pierre-Gilles",
-      "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
-      "labels": [
-        "type:feature",
-        "area:server",
-        "area:front",
-        "area:integration",
-        "area:database",
-        "claude:autofix-exhausted"
-      ],
-      "createdAt": "2026-07-23T18:43:08Z",
-      "updatedAt": "2026-08-27T20:35:00Z",
-      "mergedAt": null
-    },
-    {
-      "number": 2708,
-      "title": "Scenes: expose trigger device info as variables in actions",
-      "url": "https://github.com/GladysAssistant/Gladys/pull/2708",
-      "author": "Pierre-Gilles",
-      "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
-      "labels": [
-        "type:feature",
-        "area:server",
-        "area:front"
-      ],
-      "createdAt": "2026-07-23T19:14:04Z",
-      "updatedAt": "2026-08-27T19:44:31Z",
-      "mergedAt": null
-    },
-    {
-      "number": 3015,
-      "title": "Feature/scene trigger time ranges",
-      "url": "https://github.com/GladysAssistant/Gladys/pull/3015",
-      "author": "William-De71",
-      "avatar": "https://avatars.githubusercontent.com/u/11477113?v=4",
-      "labels": [
-        "type:feature",
-        "area:server",
-        "area:front",
-        "area:integration",
-        "risk:high",
-        "needs:human-review",
-        "area:database"
-      ],
-      "createdAt": "2026-08-26T21:33:18Z",
-      "updatedAt": "2026-08-27T16:30:51Z",
-      "mergedAt": null
     }
   ],
   "mergedPullRequests": [
     {
-      "number": 3087,
-      "title": "5.0.4",
-      "url": "https://github.com/GladysAssistant/Gladys/pull/3087",
+      "number": 3134,
+      "title": "Restrict user location and presence routes to the user themselves or an admin",
+      "url": "https://github.com/GladysAssistant/Gladys/pull/3134",
+      "author": "Pierre-Gilles",
+      "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
+      "labels": [
+        "type:fix",
+        "area:server"
+      ],
+      "createdAt": "2026-09-28T08:37:48Z",
+      "updatedAt": "2026-09-28T08:55:57Z",
+      "mergedAt": "2026-09-28T08:55:56Z"
+    },
+    {
+      "number": 3133,
+      "title": "Add maintainer governance: CODEOWNERS, MAINTAINERS.md and split release workflows",
+      "url": "https://github.com/GladysAssistant/Gladys/pull/3133",
+      "author": "Pierre-Gilles",
+      "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
+      "labels": [
+        "type:chore",
+        "area:infra",
+        "risk:high",
+        "needs:human-review"
+      ],
+      "createdAt": "2026-09-25T12:37:48Z",
+      "updatedAt": "2026-09-27T12:18:26Z",
+      "mergedAt": "2026-09-27T12:18:24Z"
+    },
+    {
+      "number": 3131,
+      "title": "Report the real Docker error when the Gladys upgrade cannot download the image",
+      "url": "https://github.com/GladysAssistant/Gladys/pull/3131",
+      "author": "Pierre-Gilles",
+      "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
+      "labels": [
+        "type:fix",
+        "area:server",
+        "area:front",
+        "risk:high"
+      ],
+      "createdAt": "2026-09-25T08:13:32Z",
+      "updatedAt": "2026-09-25T12:28:56Z",
+      "mergedAt": "2026-09-25T12:28:55Z"
+    },
+    {
+      "number": 3128,
+      "title": "5.1.1",
+      "url": "https://github.com/GladysAssistant/Gladys/pull/3128",
       "author": "Pierre-Gilles",
       "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
       "labels": [
         "type:chore"
       ],
-      "createdAt": "2026-09-04T13:42:51Z",
-      "updatedAt": "2026-09-04T13:46:32Z",
-      "mergedAt": "2026-09-04T13:43:02Z"
+      "createdAt": "2026-09-22T06:13:47Z",
+      "updatedAt": "2026-09-22T06:17:05Z",
+      "mergedAt": "2026-09-22T06:13:59Z"
     },
     {
-      "number": 3086,
-      "title": "fix(security): reserve integration secrets to admins, and remove the shell from the backup chain",
-      "url": "https://github.com/GladysAssistant/Gladys/pull/3086",
-      "author": "Pierre-Gilles",
-      "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
+      "number": 3127,
+      "title": "fix(external-integration): make registerProxyService idempotent",
+      "url": "https://github.com/GladysAssistant/Gladys/pull/3127",
+      "author": "prohand",
+      "avatar": "https://avatars.githubusercontent.com/u/20227162?v=4",
       "labels": [
         "type:fix",
-        "area:server",
-        "area:front",
-        "area:integration",
-        "risk:high",
-        "needs:human-review"
+        "area:server"
       ],
-      "createdAt": "2026-09-04T13:29:43Z",
-      "updatedAt": "2026-09-04T13:53:38Z",
-      "mergedAt": "2026-09-04T13:40:01Z"
+      "createdAt": "2026-09-21T20:23:05Z",
+      "updatedAt": "2026-09-22T05:47:39Z",
+      "mergedAt": "2026-09-22T05:47:39Z"
     },
     {
-      "number": 3085,
-      "title": "feat(energy): explain how to get a missing contract on the import page",
-      "url": "https://github.com/GladysAssistant/Gladys/pull/3085",
-      "author": "Pierre-Gilles",
-      "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
-      "labels": [
-        "type:feature",
-        "area:front"
-      ],
-      "createdAt": "2026-09-04T13:22:38Z",
-      "updatedAt": "2026-09-04T13:30:14Z",
-      "mergedAt": "2026-09-04T13:30:13Z"
-    },
-    {
-      "number": 3084,
-      "title": "Keep the saved features of the devices box when their fetch fails",
-      "url": "https://github.com/GladysAssistant/Gladys/pull/3084",
-      "author": "Pierre-Gilles",
-      "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
-      "labels": [
-        "type:fix",
-        "area:front"
-      ],
-      "createdAt": "2026-09-04T12:55:38Z",
-      "updatedAt": "2026-09-04T13:22:09Z",
-      "mergedAt": "2026-09-04T13:22:07Z"
-    },
-    {
-      "number": 3083,
-      "title": "fix(gateway): send the two factor code when generating Gladys Plus recovery codes",
-      "url": "https://github.com/GladysAssistant/Gladys/pull/3083",
-      "author": "Pierre-Gilles",
-      "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
-      "labels": [
-        "type:fix",
-        "area:server",
-        "area:front"
-      ],
-      "createdAt": "2026-09-04T12:45:49Z",
-      "updatedAt": "2026-09-04T13:15:18Z",
-      "mergedAt": "2026-09-04T13:15:17Z"
-    },
-    {
-      "number": 3069,
-      "title": "fix(dashboard): align sensor device names by dropping the legacy icon margin",
-      "url": "https://github.com/GladysAssistant/Gladys/pull/3069",
-      "author": "Pierre-Gilles",
-      "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
-      "labels": [
-        "type:fix",
-        "area:front"
-      ],
-      "createdAt": "2026-09-04T07:12:07Z",
-      "updatedAt": "2026-09-04T13:04:01Z",
-      "mergedAt": "2026-09-04T13:04:00Z"
-    },
-    {
-      "number": 3082,
-      "title": "Reuse the room-grouped feature picker in the dashboard devices box",
-      "url": "https://github.com/GladysAssistant/Gladys/pull/3082",
-      "author": "Pierre-Gilles",
-      "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
-      "labels": [
-        "type:feature",
-        "area:front"
-      ],
-      "createdAt": "2026-09-04T12:22:59Z",
-      "updatedAt": "2026-09-04T12:54:52Z",
-      "mergedAt": "2026-09-04T12:54:51Z"
-    },
-    {
-      "number": 3079,
-      "title": "fix(front): chart box header follows the series shown in the legend",
-      "url": "https://github.com/GladysAssistant/Gladys/pull/3079",
-      "author": "Pierre-Gilles",
-      "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
-      "labels": [
-        "type:fix",
-        "area:front"
-      ],
-      "createdAt": "2026-09-04T11:28:26Z",
-      "updatedAt": "2026-09-04T12:37:48Z",
-      "mergedAt": "2026-09-04T12:37:47Z"
-    },
-    {
-      "number": 3081,
-      "title": "docs: add a GitHub social preview image",
-      "url": "https://github.com/GladysAssistant/Gladys/pull/3081",
+      "number": 3126,
+      "title": "ci: replace removed cloudflare/pages-action with wrangler-action",
+      "url": "https://github.com/GladysAssistant/Gladys/pull/3126",
       "author": "Pierre-Gilles",
       "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
       "labels": [
         "type:chore",
         "area:infra"
       ],
-      "createdAt": "2026-09-04T12:07:13Z",
-      "updatedAt": "2026-09-04T12:26:48Z",
-      "mergedAt": "2026-09-04T12:26:47Z"
+      "createdAt": "2026-09-21T18:14:35Z",
+      "updatedAt": "2026-09-21T18:23:23Z",
+      "mergedAt": "2026-09-21T18:23:22Z"
     },
     {
-      "number": 3080,
-      "title": "fix(dashboard): stop scene names breaking letter by letter in narrow columns",
-      "url": "https://github.com/GladysAssistant/Gladys/pull/3080",
+      "number": 3125,
+      "title": "5.1.0",
+      "url": "https://github.com/GladysAssistant/Gladys/pull/3125",
       "author": "Pierre-Gilles",
       "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
       "labels": [
-        "type:fix",
-        "area:front"
+        "type:chore"
       ],
-      "createdAt": "2026-09-04T11:54:14Z",
-      "updatedAt": "2026-09-04T12:21:52Z",
-      "mergedAt": "2026-09-04T12:21:50Z"
+      "createdAt": "2026-09-21T18:07:13Z",
+      "updatedAt": "2026-09-21T18:20:05Z",
+      "mergedAt": "2026-09-21T18:07:34Z"
     },
     {
-      "number": 3054,
-      "title": "feat(dashboard): move house-view pins by dragging them",
-      "url": "https://github.com/GladysAssistant/Gladys/pull/3054",
+      "number": 3124,
+      "title": "feat(zigbee2mqtt): map the diagnostic features of smoke detectors",
+      "url": "https://github.com/GladysAssistant/Gladys/pull/3124",
       "author": "Pierre-Gilles",
       "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
       "labels": [
         "type:feature",
-        "area:front"
+        "area:server",
+        "area:front",
+        "area:integration",
+        "needs:human-review"
       ],
-      "createdAt": "2026-08-28T18:05:12Z",
-      "updatedAt": "2026-09-04T12:19:35Z",
-      "mergedAt": "2026-09-04T12:19:33Z"
+      "createdAt": "2026-09-21T14:57:28Z",
+      "updatedAt": "2026-09-21T15:09:03Z",
+      "mergedAt": "2026-09-21T15:08:26Z"
     },
     {
-      "number": 3072,
-      "title": "Hide Gladys Plus user revoke/invite actions for non-admin users",
-      "url": "https://github.com/GladysAssistant/Gladys/pull/3072",
+      "number": 3123,
+      "title": "chore(deps): apply patch/minor security updates to lockfiles",
+      "url": "https://github.com/GladysAssistant/Gladys/pull/3123",
+      "author": "Pierre-Gilles",
+      "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
+      "labels": [
+        "type:chore",
+        "area:server",
+        "area:front",
+        "area:integration"
+      ],
+      "createdAt": "2026-09-21T14:51:36Z",
+      "updatedAt": "2026-09-21T14:59:09Z",
+      "mergedAt": "2026-09-21T14:59:08Z"
+    },
+    {
+      "number": 3122,
+      "title": "fix(matter): upgrade matter.js to 0.17.9 to fix \"Node ID X is already commissioned\" pairing errors",
+      "url": "https://github.com/GladysAssistant/Gladys/pull/3122",
       "author": "Pierre-Gilles",
       "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
       "labels": [
         "type:fix",
-        "area:front"
+        "area:server",
+        "area:integration"
       ],
-      "createdAt": "2026-09-04T08:18:23Z",
-      "updatedAt": "2026-09-04T12:18:08Z",
-      "mergedAt": "2026-09-04T12:18:07Z"
+      "createdAt": "2026-09-21T14:39:44Z",
+      "updatedAt": "2026-09-21T14:48:38Z",
+      "mergedAt": "2026-09-21T14:48:36Z"
+    },
+    {
+      "number": 3120,
+      "title": "fix(security): stop password reset link poisoning through an attacker-chosen origin",
+      "url": "https://github.com/GladysAssistant/Gladys/pull/3120",
+      "author": "Pierre-Gilles",
+      "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
+      "labels": [
+        "type:fix",
+        "area:server",
+        "area:front",
+        "risk:high",
+        "needs:human-review",
+        "area:database"
+      ],
+      "createdAt": "2026-09-21T13:55:43Z",
+      "updatedAt": "2026-09-21T14:38:42Z",
+      "mergedAt": "2026-09-21T14:35:25Z"
+    },
+    {
+      "number": 3121,
+      "title": "feat(device): grid-carbon-sensor category",
+      "url": "https://github.com/GladysAssistant/Gladys/pull/3121",
+      "author": "Pierre-Gilles",
+      "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
+      "labels": [
+        "type:feature",
+        "area:server",
+        "area:front",
+        "needs:human-review"
+      ],
+      "createdAt": "2026-09-21T14:18:31Z",
+      "updatedAt": "2026-09-21T14:26:41Z",
+      "mergedAt": "2026-09-21T14:25:45Z"
     }
   ],
   "contributorsCount": 57,
@@ -1334,7 +1344,7 @@
       "login": "Pierre-Gilles",
       "avatar": "https://avatars.githubusercontent.com/u/7365207?v=4",
       "url": "https://github.com/Pierre-Gilles",
-      "contributions": 2546
+      "contributions": 2571
     },
     {
       "login": "atrovato",
@@ -1352,7 +1362,7 @@
       "login": "cicoub13",
       "avatar": "https://avatars.githubusercontent.com/u/1773153?v=4",
       "url": "https://github.com/cicoub13",
-      "contributions": 62
+      "contributions": 65
     },
     {
       "login": "bertrandda",
@@ -1370,7 +1380,7 @@
       "login": "William-De71",
       "avatar": "https://avatars.githubusercontent.com/u/11477113?v=4",
       "url": "https://github.com/William-De71",
-      "contributions": 45
+      "contributions": 46
     },
     {
       "login": "callemand",
@@ -1405,23 +1415,10 @@
   ],
   "forumRequests": [
     {
-      "id": 10521,
-      "title": "Intégration externe : Le suivi de l'énergie devrait être géré automatiquement comme pour Zigbee2mqtt",
-      "url": "https://community.gladysassistant.com/t/integration-externe-le-suivi-de-lenergie-devrait-etre-gere-automatiquement-comme-pour-zigbee2mqtt/10521",
-      "views": 47,
-      "replies": 6,
-      "likes": 1,
-      "createdAt": "2026-08-10T17:34:51.108Z",
-      "bumpedAt": "2026-08-10T20:19:59.506Z",
-      "author": "pierre-gilles",
-      "delivered": false,
-      "tags": []
-    },
-    {
       "id": 10310,
       "title": "Supprimer l'option de migration DuckDB après migration",
       "url": "https://community.gladysassistant.com/t/supprimer-loption-de-migration-duckdb-apres-migration/10310",
-      "views": 58,
+      "views": 69,
       "replies": 3,
       "likes": 6,
       "createdAt": "2026-06-29T18:32:22.549Z",
@@ -1436,7 +1433,7 @@
       "id": 9447,
       "title": "[Scène] Supprimer bloc 1 si vide",
       "url": "https://community.gladysassistant.com/t/scene-supprimer-bloc-1-si-vide/9447",
-      "views": 92,
+      "views": 132,
       "replies": 8,
       "likes": 2,
       "createdAt": "2025-03-22T08:44:29.764Z",
@@ -1449,7 +1446,7 @@
       "id": 10576,
       "title": "Intégrations - Diminuer le bandeau bleu sur mobile",
       "url": "https://community.gladysassistant.com/t/integrations-diminuer-le-bandeau-bleu-sur-mobile/10576",
-      "views": 28,
+      "views": 34,
       "replies": 0,
       "likes": 0,
       "createdAt": "2026-08-15T14:49:19.631Z",
@@ -1462,7 +1459,7 @@
       "id": 10574,
       "title": "Intégration externe - Avoir le numéro de la nouvelle version",
       "url": "https://community.gladysassistant.com/t/integration-externe-avoir-le-numero-de-la-nouvelle-version/10574",
-      "views": 30,
+      "views": 37,
       "replies": 0,
       "likes": 0,
       "createdAt": "2026-08-15T14:40:00.015Z",
@@ -1475,7 +1472,7 @@
       "id": 10517,
       "title": "IA : pouvoir demander la météo dans le chat",
       "url": "https://community.gladysassistant.com/t/ia-pouvoir-demander-la-meteo-dans-le-chat/10517",
-      "views": 55,
+      "views": 67,
       "replies": 3,
       "likes": 4,
       "createdAt": "2026-08-10T12:54:21.590Z",
@@ -1488,7 +1485,7 @@
       "id": 9505,
       "title": "[Scènes] Pouvoir créer une variable 'ponctuelle'",
       "url": "https://community.gladysassistant.com/t/scenes-pouvoir-creer-une-variable-ponctuelle/9505",
-      "views": 150,
+      "views": 160,
       "replies": 7,
       "likes": 10,
       "createdAt": "2025-05-11T20:15:11.640Z",
@@ -1503,7 +1500,7 @@
       "id": 10544,
       "title": "Matter : serrures et détecteurs de fuites",
       "url": "https://community.gladysassistant.com/t/matter-serrures-et-detecteurs-de-fuites/10544",
-      "views": 32,
+      "views": 42,
       "replies": 0,
       "likes": 0,
       "createdAt": "2026-08-13T17:52:27.005Z",
@@ -1513,10 +1510,23 @@
       "tags": []
     },
     {
+      "id": 10521,
+      "title": "Intégration externe : Le suivi de l'énergie devrait être géré automatiquement comme pour Zigbee2mqtt",
+      "url": "https://community.gladysassistant.com/t/integration-externe-le-suivi-de-lenergie-devrait-etre-gere-automatiquement-comme-pour-zigbee2mqtt/10521",
+      "views": 72,
+      "replies": 6,
+      "likes": 1,
+      "createdAt": "2026-08-10T17:34:51.108Z",
+      "bumpedAt": "2026-08-10T20:19:59.506Z",
+      "author": "pierre-gilles",
+      "delivered": true,
+      "tags": []
+    },
+    {
       "id": 10514,
       "title": "Intégrations externes : pouvoir voir quelles intégrations tournent sur l'instance",
       "url": "https://community.gladysassistant.com/t/integrations-externes-pouvoir-voir-quelles-integrations-tournent-sur-linstance/10514",
-      "views": 26,
+      "views": 33,
       "replies": 0,
       "likes": 0,
       "createdAt": "2026-08-10T09:25:26.385Z",
@@ -1529,7 +1539,7 @@
       "id": 10461,
       "title": "Afficher les intégrations à mettre à jour",
       "url": "https://community.gladysassistant.com/t/afficher-les-integrations-a-mettre-a-jour/10461",
-      "views": 61,
+      "views": 73,
       "replies": 4,
       "likes": 2,
       "createdAt": "2026-08-05T22:26:53.473Z",
@@ -1544,7 +1554,7 @@
       "id": 10477,
       "title": "Intégrations externes : placeholders résolus par le front dans les textes du manifeste ({{gladys_host}}, {{port:xxx}})",
       "url": "https://community.gladysassistant.com/t/integrations-externes-placeholders-resolus-par-le-front-dans-les-textes-du-manifeste-gladys-host-port-xxx/10477",
-      "views": 27,
+      "views": 32,
       "replies": 1,
       "likes": 2,
       "createdAt": "2026-08-07T08:10:20.236Z",
@@ -1559,7 +1569,7 @@
       "id": 10476,
       "title": "Intégrations externes : permettre de masquer le lien \"Open\" d'un port publié",
       "url": "https://community.gladysassistant.com/t/integrations-externes-permettre-de-masquer-le-lien-open-dun-port-publie/10476",
-      "views": 27,
+      "views": 32,
       "replies": 1,
       "likes": 2,
       "createdAt": "2026-08-07T08:09:52.007Z",
@@ -1574,7 +1584,7 @@
       "id": 10392,
       "title": "Décaler le jour de départ du suivi de l'énergie",
       "url": "https://community.gladysassistant.com/t/decaler-le-jour-de-depart-du-suivi-de-lenergie/10392",
-      "views": 55,
+      "views": 64,
       "replies": 3,
       "likes": 2,
       "createdAt": "2026-07-29T08:21:28.972Z",
@@ -1589,7 +1599,7 @@
       "id": 10095,
       "title": "Gestion du capteur de fuite d’eau Ikea dans l’intégration Matter",
       "url": "https://community.gladysassistant.com/t/gestion-du-capteur-de-fuite-d-eau-ikea-dans-l-integration-matter/10095",
-      "views": 36,
+      "views": 41,
       "replies": 0,
       "likes": 0,
       "createdAt": "2026-03-05T08:32:58.541Z",
@@ -1604,7 +1614,7 @@
       "id": 9925,
       "title": "Amélioration de déclencheur : changement d'état d'appareil avec ... TOUT ou RIEN",
       "url": "https://community.gladysassistant.com/t/amelioration-de-declencheur-changement-detat-dappareil-avec-tout-ou-rien/9925",
-      "views": 75,
+      "views": 86,
       "replies": 2,
       "likes": 0,
       "createdAt": "2026-01-18T19:29:00.817Z",
@@ -1619,7 +1629,7 @@
       "id": 9829,
       "title": "Tableau de bord : L'identifiant unique devrait contenir une partie aléatoire comme les scènes",
       "url": "https://community.gladysassistant.com/t/tableau-de-bord-lidentifiant-unique-devrait-contenir-une-partie-aleatoire-comme-les-scenes/9829",
-      "views": 35,
+      "views": 41,
       "replies": 0,
       "likes": 0,
       "createdAt": "2025-11-20T15:15:07.100Z",
@@ -1633,11 +1643,11 @@
   ],
   "snapshotVersion": 1,
   "etags": {
-    "https://api.github.com/repos/GladysAssistant/Gladys": "W/\"f2e71a94a77f669a4825889ef255b437085a8bb05292aff9b97f642e358b7fe3\"",
-    "https://api.github.com/repos/GladysAssistant/Gladys/contributors?per_page=100": "W/\"bd5ef8ef9d8febe64eb2ad43376e60403e6b393b3c07117d1cdf50da643789cf\"",
-    "https://api.github.com/repos/GladysAssistant/Gladys/pulls?state=closed&per_page=100&sort=updated&direction=desc": "W/\"0a32ceed79329aa89460679ed797471e1f8cf1b7c2b3cacf5e8bc5e7f0ddb63f\"",
-    "https://api.github.com/repos/GladysAssistant/Gladys/pulls?state=open&per_page=100&sort=updated&direction=desc": "W/\"a63f3203af19028419c97966b7a323b4fe871508bbc9f44f2b74bbf83c1cfd8e\"",
-    "https://api.github.com/repos/GladysAssistant/Gladys/releases?per_page=30": "W/\"fc4f36be916aaca5ee8810476df2750d2f89d0f3f26169dc1aed95d0c01cc189\"",
-    "https://api.github.com/repos/GladysAssistant/Gladys/stats/commit_activity": "W/\"783b57d5f78c8092cc690edcb88b4471a2064d61ec5dc0b8082e98e457995b66\""
+    "https://api.github.com/repos/GladysAssistant/Gladys": "W/\"a7326e5234279a9c18bdce25c962d9ad90a85b1c023c538d7b9c194ddf9e9e89\"",
+    "https://api.github.com/repos/GladysAssistant/Gladys/contributors?per_page=100": "W/\"23e6a6c98a99550693dd8dc300f8e952f61be2839557feb231d1b61363dfbbd2\"",
+    "https://api.github.com/repos/GladysAssistant/Gladys/pulls?state=closed&per_page=100&sort=updated&direction=desc": "W/\"9d63a5582c50fc7091d4387a22833fec9e854d133d85ce6241b35dbd5669a4ba\"",
+    "https://api.github.com/repos/GladysAssistant/Gladys/pulls?state=open&per_page=100&sort=updated&direction=desc": "W/\"395c06492fb81c80a6cdecdc705fadacdf1559db431b856f51c1e90c2a645c42\"",
+    "https://api.github.com/repos/GladysAssistant/Gladys/releases?per_page=30": "W/\"8973f2f7b2a422b6d72272e46bcbd4166fc39486d97cfaa1b3c02ccff87d7115\"",
+    "https://api.github.com/repos/GladysAssistant/Gladys/stats/commit_activity": "W/\"be03be28f5fedf0acb1ba7d29997ebd03d92432411c05ec59dfc351c0eb4388a\""
   }
 }
