@@ -35,13 +35,33 @@ proxmox-backup-manager acl update /system Audit --auth-id gladys@pbs --propagate
 proxmox-backup-manager acl update /system Audit --auth-id 'gladys@pbs!monitoring' --propagate true
 ```
 
-PBS API tokens use separate ACL entries by design; `generate-token` does not accept a `--privsep` option. Effective token permissions are the intersection of the parent user's permissions and the token's own permissions, hence the matching ACLs. Replace `/datastore` with `/datastore/NAME` in both datastore commands to restrict monitoring to one store. Enter the full token ID and the one-time secret in Gladys. Keep TLS verification enabled unless the server uses a self-signed certificate on a trusted network.
+PBS API tokens use separate ACL entries by design; `generate-token` does not accept a `--privsep` option. Effective token permissions are the intersection of the parent user's permissions and the token's own permissions, hence the matching ACLs. Replace `/datastore` with `/datastore/NAME` in both datastore commands to restrict monitoring to one store. Enter the full token ID and the one-time secret in Gladys.
+
+## TLS and the self-signed PBS certificate
+
+Use an `https://` URL. An `http://` URL is accepted, but the API token then travels **in clear text** on the network at every refresh: anyone able to read that traffic can reuse it.
+
+PBS ships a **self-signed** certificate, which the container does not trust. From the best option to the worst:
+
+1. **Pin the fingerprint (recommended).** Paste the server's SHA-256 fingerprint into the `TLS certificate fingerprint` field. Only a server presenting exactly that certificate is accepted, and the fingerprint is checked **before** the token is sent: a server impersonating PBS never receives it. Find the fingerprint in the PBS web interface (**Dashboard → Show Fingerprint**) or in a shell on PBS:
+
+   ```bash
+   proxmox-backup-manager cert info | grep -i fingerprint
+   ```
+
+   Separators and case do not matter (`AA:BB:…` or `aabb…`). The fingerprint changes when the certificate is renewed or replaced: update the field then. A pinned fingerprint requires an `https://` URL and takes precedence over `Verify TLS certificate`.
+
+2. **A certificate signed by a trusted authority** (for example ACME / Let's Encrypt configured on PBS): leave the fingerprint empty and keep `Verify TLS certificate` on.
+
+3. **Turn `Verify TLS certificate` off**, as a last resort and on a trusted network only: the connection stays encrypted, but nothing proves the server is the real one, and the token is sent to whoever answers.
 
 The refresh interval defaults to 15 minutes. It cannot be set below 5 minutes to limit growth of the Gladys database, and it can be increased up to 24 hours.
 
-The general `Date format` dropdown controls all task dates. It offers ISO 8601, day/month/year, year-month-day, and month/day/year formats. Dates are formatted in UTC.
+The general `Date format` dropdown controls all task dates. It offers ISO 8601, day/month/year, year-month-day, and month/day/year formats.
 
-> After changing and saving the date format, open the affected PBS device in Gladys and save it again to apply the change.
+The `Time zone` field sets the zone dates are shown in, as an IANA name such as `Europe/Paris` (summer and winter time are handled). It defaults to `UTC`; an empty or unknown value also falls back to UTC. In ISO 8601, a zone other than UTC adds its offset, for example `2026-09-23T23:30:01+02:00`.
+
+> After changing and saving the date format or the time zone, open the affected PBS device in Gladys and save it again to apply the change.
 
 ## Exposed features
 
@@ -63,12 +83,62 @@ The three capacity values (`Usage`, `Total size`, and `Used space`) are mapped t
 | Last prune date                | Text       | Latest prune date, in the configured format.                               |
 | Backup stale (> 26 h)          | `0` or `1` | `1` when no snapshot exists or the newest snapshot is older than 26 hours. |
 
+## Dashboard widgets, scene triggers, and scene actions (Gladys 5.1)
+
+These require Gladys **5.1.0** or later. They only read PBS: no button, trigger, or action can start, change, or delete anything on the server.
+
+### Dashboard widgets
+
+Add them from the dashboard editor, in the widget list of this integration.
+
+| Widget        | Settings                                | Content                                                                                                                                                |
+| ------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| PBS datastore | One datastore, show tiles (default: on) | Usage gauge, free space, snapshot count, one card per verify/GC/prune task (date and result badge), last backup, used / total space, `Refresh` button. |
+| PBS backups   | None                                    | Usage of the fullest datastore, stale backups, failed tasks, one status row per datastore (up to 10), `Refresh` button.                                |
+
+The snapshot tile follows the device state live. The other tiles, the task cards, and the status rows are updated after each refresh. The `Refresh` button reads PBS again right away. Turn off `Show usage, free space and snapshot tiles` to hide the three tiles.
+
+### Scene triggers
+
+They show up in the scene editor, in the "Integrations" category. Each filter is optional: leave it empty to match any value.
+
+| Trigger                       | Fires when                                             | Filters                      | Variables                                                 |
+| ----------------------------- | ------------------------------------------------------ | ---------------------------- | --------------------------------------------------------- |
+| PBS maintenance task finished | A verify, garbage collection, or prune task has ended. | Datastore, task type, result | `datastore_name`, `task_type`, `result`, `status`, `date` |
+| New PBS backup                | A newer snapshot appeared on the datastore.            | Datastore                    | `datastore_name`, `last_backup`, `snapshot_count`         |
+| PBS backup is stale           | The newest snapshot just became older than 26 hours.   | Datastore                    | `datastore_name`, `last_backup`, `hours_since_backup`     |
+| PBS unreachable               | A datastore refresh failed (once per outage).          | Datastore                    | `datastore_name`, `error`                                 |
+| PBS reachable again           | A datastore refresh succeeded after a failure.         | Datastore                    | `datastore_name`                                          |
+
+`result` is `ok`, `warning`, or `error`; `status` is the raw PBS status, for example `OK`, `WARNINGS: 2`, or the error text.
+
+- Triggers fire **once per change**, never at every refresh. Example: a backup that stays stale fires `PBS backup is stale` only once.
+- Changes are detected by the scheduled refresh (the refresh interval). A refresh asked by a widget or a scene action never fires a trigger itself; the next scheduled refresh reports the change.
+- The first refresh after a start or a configuration change fires nothing: it sets the reference point.
+- If several tasks of the same type finish between two refreshes, only the newest is reported.
+
+### Scene actions
+
+| Action                   | Fields                                                 | Outputs                                                                                                                                                                                                                                             |
+| ------------------------ | ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Get PBS datastore status | Datastore (required), `Read PBS now` (default: off)    | `datastore_name`, `usage_percent`, `used_gb`, `total_gb`, `snapshot_count`, `backup_stale`, `last_backup`, `hours_since_backup`, `last_verify_status`, `last_verify_date`, `last_gc_status`, `last_gc_date`, `last_prune_status`, `last_prune_date` |
+| Get PBS backup report    | `Read PBS now` (default: off), report language (en/fr) | `datastore_count`, `stale_count`, `failed_task_count`, `unreachable_count`, `max_usage_percent`, `all_ok`, `summary`                                                                                                                                |
+
+- Without `Read PBS now`, the action answers from the last refresh and costs nothing on PBS.
+- `summary` is a ready-to-send text, one line per datastore. Example for a daily report: "Every day at 8:00" → "Get PBS backup report" → "Send a message" with the `summary` output.
+- Example alert: "PBS maintenance task finished" filtered on result `error` → "Send a message": `PBS {{triggerEvent.data.task_type}} failed on {{triggerEvent.data.datastore_name}}: {{triggerEvent.data.status}}`.
+
 ## Behaviour notes
 
 - Snapshot count and backup freshness are read from the datastore's backup groups (`backup-count` and `last-backup`), so a datastore holding thousands of snapshots costs one small response per refresh. If a PBS release does not expose those counters, the integration falls back to listing the snapshots.
-- The task history is read page by page until the newest verify, garbage collection, and prune tasks have been found (up to 2000 tasks), so a busy datastore does not push them out of view and back to `Never run`.
-- Datastores that are offline or unmounted report no capacity; the integration then publishes `0` for usage, total size, and used space rather than an invalid value.
+- The task history is read with one filtered request per task type (verify, garbage collection, prune), so a busy datastore does not push them out of view and back to `Never run`, and a task type that never ran costs one empty answer. A PBS release that refuses the filter is read page by page instead (up to 2000 tasks).
+- The capacity of every datastore comes from one `/status/datastore-usage` read, shared by all the datastores refreshed within the same minute.
+- Datastores that are offline or unmounted report no capacity; the integration then publishes **nothing** for usage, total size, and used space (the last real values stay displayed) rather than a `0` that would look like an emptied datastore. Widgets show the capacity as unavailable.
+- Every request to PBS ends within 15 seconds, including an answer cut or stalled halfway, and answers larger than 8 MB are refused. The connection status names the cause: token refused (HTTP 401), missing role (HTTP 403), certificate, network, or timeout.
 - A refresh that fails (network error, timeout, PBS restart) is retried on the next one-minute Gladys tick instead of waiting a full refresh interval. At startup, the connection is retried four times with an exponential backoff before the integration reports itself as disconnected.
+- A refresh that PBS answered but Gladys could not store (Gladys restarting, for example) is retried on the next tick too; it is not reported as `PBS unreachable`.
+- A datastore deleted or renamed on PBS is dropped from the monitored list as soon as PBS stops listing it, without a `PBS unreachable` event, and no longer keeps the connection status red. Its device left in Gladys is looked up again after one refresh interval, then twice as long each time, up to once a day.
+- A device just added from the Discovery tab is read right away instead of at the next refresh.
 
 ## Checking which inventory route is used
 
@@ -83,7 +153,7 @@ PBS_TOKEN_SECRET='the-token-secret' \
 npm run check:pbs
 ```
 
-It prints, per datastore, the route actually used, how long each route takes, and the last verify/GC/prune task. It also cross-checks the snapshot count and the newest backup against the full snapshot list, and exits with code `1` if the two disagree. Add `PBS_NODE=...` for a node other than `localhost`, and `PBS_VERIFY_TLS=false` for a self-signed certificate.
+It prints, per datastore, the route actually used, how long each route takes, and the last verify/GC/prune task. It also cross-checks the snapshot count and the newest backup against the full snapshot list, and exits with code `1` if the two disagree. Add `PBS_NODE=...` for a node other than `localhost`, and `PBS_FINGERPRINT=AA:BB:...` for a self-signed certificate (or `PBS_VERIFY_TLS=false` on a trusted network).
 
 The same routes can be checked by hand:
 
@@ -101,22 +171,24 @@ These are the settings Proxmox Backup Server asks for in its configuration scree
 | Setting | Type | Required | Description |
 | --- | --- | --- | --- |
 | Proxmox Backup Server connection | `section` | No | Create a dedicated API token with the read-only DatastoreAudit and Audit roles. See the documentation for the exact commands. |
-| Server URL | `string` | Yes | For example: https://pbs.example.com:8007 |
+| Server URL | `string` | Yes | For example: https://pbs.example.com:8007. Avoid http://: it sends the API token in clear text. |
 | API token ID | `string` | Yes | Full ID, for example gladys@pbs!monitoring |
 | API token secret | `secret` | Yes |  |
 | PBS node name | `string` | No |  |
 | Refresh interval (seconds) | `number` | No |  |
-| Verify TLS certificate | `boolean` | No |  |
-| Date format | `select` | No | Select how task dates are displayed. Dates are displayed in UTC. |
+| TLS certificate fingerprint | `string` | No | Recommended with the default self-signed PBS certificate: its SHA-256 fingerprint (Dashboard > Show Fingerprint). The token is only sent to a server presenting it. Leave empty for a certificate signed by a trusted CA. |
+| Verify TLS certificate | `boolean` | No | Ignored when a fingerprint is pinned. Turn off only as a last resort, on a trusted network: the connection stays encrypted but nothing proves the server is the real one. |
+| Date format | `select` | No | Select how task dates are displayed, in the time zone set below. |
+| Time zone | `string` | No | IANA name used to display dates, for example Europe/Paris. Empty or unknown: UTC. |
 
 ## How to install Proxmox Backup Server in Gladys
 
 1. In Gladys, open **Integrations**: Proxmox Backup Server appears in the catalog, next to the native integrations, with a community badge.
-2. Click **Install**. Gladys pulls the Docker image (`ghcr.io/prohand/gladys-proxmox-backup-server:1.0.3`), starts it in a sandbox isolated from the core, and generates the integration's interface (devices, discovery and configuration).
+2. Click **Install**. Gladys pulls the Docker image (`ghcr.io/prohand/gladys-proxmox-backup-server:2.5.0`), starts it in a sandbox isolated from the core, and generates the integration's interface (devices, discovery and configuration).
 3. Open the **Configuration** screen of the integration, fill in the settings, and save.
 4. You can also install it directly from its repository URL: [https://github.com/prohand/gladys-proxmox-backup-server](https://github.com/prohand/gladys-proxmox-backup-server).
 
-Proxmox Backup Server requires Gladys `>=4.86.0`. The catalog inside Gladys refreshes every hour, so a new version becomes available at most one hour after its release.
+Proxmox Backup Server requires Gladys `>=5.1.0`. The catalog inside Gladys refreshes every hour, so a new version becomes available at most one hour after its release.
 
 Not running Gladys yet? It is free and open source: [follow the installation guide](/docs/) to get started.
 

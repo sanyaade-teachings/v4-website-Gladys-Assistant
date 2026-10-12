@@ -39,8 +39,9 @@ MFA is supported through DSM verification codes (OTP). **Approve sign-in** and h
 - **DSM URL**: full local URL, for example `https://192.168.1.20:5001`.
 - **Username / password**: credentials of the dedicated DSM user.
 - **Current OTP code (MFA)**: a current 6-digit code for the first MFA login or after the DSM trusted device is revoked. It is not sent once the remembered device is accepted.
-- **Verify the TLS certificate**: keep enabled for a trusted certificate. Disable only for a self-signed local certificate after verifying the NAS address yourself.
-- **NAS 2, NAS 3 and NAS 4**: optional connections using the same URL, username, password, OTP and TLS fields as the primary NAS. Leave a NAS URL empty to ignore that slot. Every password and OTP is stored in a dedicated Gladys secret field and is never exposed in a JSON document.
+- **Verify the TLS certificate**: keep enabled for a trusted certificate. For a self-signed certificate, prefer pinning its fingerprint (next field) to disabling this check: once disabled, any device that can intercept the traffic between Gladys and the NAS on your network can pose as the NAS and receive the DSM password (man-in-the-middle).
+- **Pinned certificate fingerprint (SHA-256)**: optional. When filled in, the NAS is accepted only if its certificate has exactly this fingerprint, whatever the setting above; otherwise the connection is dropped before anything — the password included — is sent. Read it in your browser (padlock → certificate → SHA-256 fingerprint) or with `openssl s_client -connect NAS_ADDRESS:5001 </dev/null | openssl x509 -noout -fingerprint -sha256`; colons, spaces and case do not matter. Update it whenever DSM renews the certificate, and do not pin a certificate renewed automatically (Let's Encrypt): keep the check enabled instead.
+- **NAS 2, NAS 3 and NAS 4**: optional connections using the same URL, username, password, OTP, TLS and fingerprint fields as the primary NAS. Leave a NAS URL empty to ignore that slot. Every password and OTP is stored in a dedicated Gladys secret field and is never exposed in a JSON document.
 - **Refresh interval**: manually entered in seconds, from 60 to 86400. The recommended default is 900 seconds (15 minutes). A moderate interval prevents unnecessary Gladys database growth.
 - **Date format**: how backup dates are displayed in Gladys. `ISO 8601` (default, UTC) keeps the raw DSM timestamp, `YYYY-MM-DD HH:mm`, `DD/MM/YYYY HH:mm` and `MM/DD/YYYY hh:mm AM/PM` display the local time of the integration container. Set the `TZ` environment variable of the integration container to your own timezone if these formats show an unexpected hour. Changing the format applies from the next refresh onwards; dates already recorded keep the format used when they were published.
 
@@ -54,6 +55,39 @@ A first snapshot is sent immediately after a device is added, then every refresh
 
 The health indicators only take a value on a status DSM clearly reports as healthy or as a failure. During a maintenance operation (expansion, scrubbing, repair) or when SMART is unsupported, the previous value is kept instead of publishing a false alarm.
 
+## Dashboard widgets
+
+Requires Gladys 5.1 or later. Add them from the dashboard editor; every widget has a **NAS** setting that accepts any device of the NAS to show (the NAS itself, a volume, a disk or a backup task). Leave it empty to show the first NAS.
+
+- **Synology NAS**: model, DSM version, CPU, memory and temperature, one row per volume (usage and health), a summary of the disks and the backups, and a button to open DSM when its URL uses HTTPS. Once the NAS device is added to Gladys, the card also plots the CPU and memory history over the period chosen in the **Load history** setting.
+- **Synology storage**: one gauge per volume, the total free space and one row per disk with its SMART status and temperature.
+- **Synology backups**: the Hyper Backup and Active Backup tasks with their last result, failures first. With an empty **NAS** setting, it lists the tasks of every NAS. The **Tasks shown** setting can keep only the failed or partial ones.
+
+Widgets show the values read at the last refresh: opening a dashboard never queries the NAS. They update after each refresh. A NAS that stops answering is flagged **Unreachable** and keeps its last known values. On a dashboard set to US units, temperatures are shown in °F.
+
+## Scenes
+
+Requires Gladys 5.1 or later.
+
+**Triggers** fire once, on a change between two refreshes. The first reading after the integration starts only serves as a reference: a failure already present at startup does not fire again, and a change that happens while the integration is stopped is not reported. Each trigger can be limited to one device; leave the field empty to react to all of them.
+
+| Trigger                        | Fires when                                                                                                                  | Variables                                            |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| A Synology NAS stops answering | A NAS that was answering fails a refresh                                                                                    | NAS model, DSM URL, error                            |
+| A Synology NAS answers again   | That NAS answers again                                                                                                      | NAS model, DSM URL, unreachable for (min)            |
+| A Synology volume is degraded  | DSM reports a healthy volume as degraded, crashed or in error                                                               | NAS model, volume name, DSM status, usage (%)        |
+| A Synology disk is failing     | The SMART status of a healthy disk turns to a failure                                                                       | NAS model, disk name, SMART status, temperature (°C) |
+| A Synology backup finished     | A new result is read from a Hyper Backup or Active Backup task (filter by package and by result: success, partial, failure) | NAS model, task name, package, result, backup date   |
+| DSM was updated                | A NAS reports a new DSM version                                                                                             | NAS model, previous version, new version             |
+
+A maintenance state (expansion, scrubbing, repair) never counts as a failure, and a backup still running is only reported once it has finished.
+
+**Actions** query the NAS when the scene reaches them and return values that the following actions can use:
+
+- **Get the state of a Synology NAS**: reachable (yes/no), model, DSM version, CPU, memory, temperature, number of degraded volumes, failing disks and failed backups, and the list of problems found. An unreachable NAS does not stop the scene: test the **Reachable** value.
+- **Get the state of a Synology volume**: name, DSM status, healthy (yes/no), usage (%), used, free and total space (GB).
+- **Get the state of a Synology backup**: task name, package, status, result, last backup date (in the configured date format) and hours since the last backup, handy to warn about a backup that no longer runs.
+
 ## Troubleshooting
 
 - **Invalid credentials**: verify the dedicated account and its login policy.
@@ -64,7 +98,8 @@ The health indicators only take a value on a status DSM clearly reports as healt
 - **Unable to reach DSM**: test the URL from the Gladys host and verify the NAS firewall.
 - **DSM did not answer in time**: the NAS accepted the connection but did not reply within 20 seconds. The refresh is abandoned and retried on the next cycle; check the NAS load and the network.
 - **A single NAS is unreachable in a multi-NAS setup**: the other NAS keep publishing their values and the Gladys configuration screen names the failing address. Only a failure of every NAS reports the integration as disconnected.
-- **Certificate error**: install a trusted certificate in DSM. For a private, self-signed installation only, certificate verification can be disabled.
+- **Certificate error** (`certificate rejected`): install a trusted certificate in DSM. For a private, self-signed installation, pin the certificate fingerprint; disabling the verification also works but leaves the password exposed to a man-in-the-middle on your network.
+- **`certificate does not match the pinned SHA-256 fingerprint`**: DSM presented another certificate. If you renewed or replaced it yourself, paste the new fingerprint; otherwise, something is posing as your NAS — nothing was sent to it.
 - **A volume is missing**: rescan after creating or removing a volume.
 - **Backup tasks are missing**: verify that Hyper Backup or Active Backup is installed, that at least one task exists and that the dedicated DSM account can open the corresponding package, then scan again.
 - **A backup date has no value**: update the integration, save the connection again and wait for the next refresh. Active Backup details are queried task by task because its general task list does not always include version dates.
@@ -81,35 +116,39 @@ These are the settings Synology DSM asks for in its configuration screen in Glad
 | Password | `secret` | Yes |  |
 | Current OTP code (MFA) | `secret` | No | Required only to trust this Gladys installation on the first MFA login, or after revoking the trusted device in DSM. Enter a current 6-digit verification code. |
 | Verify the TLS certificate | `boolean` | No | Keep enabled unless DSM uses a self-signed certificate. |
+| Pinned certificate fingerprint (SHA-256) | `string` | No | Optional, for a self-signed certificate. When filled in, the NAS is only accepted if its certificate has exactly this SHA-256 fingerprint (the password is never sent otherwise), whatever the setting above. |
 | NAS 2 (optional) | `section` | No | Leave the URL empty to ignore this slot. Credentials are stored in dedicated secret fields. |
 | NAS 2 — DSM URL | `string` | No |  |
 | NAS 2 — Username | `string` | No |  |
 | NAS 2 — Password | `secret` | No |  |
 | NAS 2 — Current OTP code | `secret` | No |  |
 | NAS 2 — Verify TLS certificate | `boolean` | No |  |
+| NAS 2 — Pinned certificate fingerprint (SHA-256) | `string` | No |  |
 | NAS 3 (optional) | `section` | No | Leave the URL empty to ignore this slot. Credentials are stored in dedicated secret fields. |
 | NAS 3 — DSM URL | `string` | No |  |
 | NAS 3 — Username | `string` | No |  |
 | NAS 3 — Password | `secret` | No |  |
 | NAS 3 — Current OTP code | `secret` | No |  |
 | NAS 3 — Verify TLS certificate | `boolean` | No |  |
+| NAS 3 — Pinned certificate fingerprint (SHA-256) | `string` | No |  |
 | NAS 4 (optional) | `section` | No | Leave the URL empty to ignore this slot. Credentials are stored in dedicated secret fields. |
 | NAS 4 — DSM URL | `string` | No |  |
 | NAS 4 — Username | `string` | No |  |
 | NAS 4 — Password | `secret` | No |  |
 | NAS 4 — Current OTP code | `secret` | No |  |
 | NAS 4 — Verify TLS certificate | `boolean` | No |  |
+| NAS 4 — Pinned certificate fingerprint (SHA-256) | `string` | No |  |
 | Refresh interval (s) | `number` | No | Custom interval in seconds (60 to 86400). The default is 900 seconds. A moderate interval limits the growth of the Gladys database. |
 | Date format | `select` | No | Format used for the backup dates published to Gladys. Every format except ISO 8601 shows the local time of the integration container. |
 
 ## How to install Synology DSM in Gladys
 
 1. In Gladys, open **Integrations**: Synology DSM appears in the catalog, next to the native integrations, with a community badge.
-2. Click **Install**. Gladys pulls the Docker image (`ghcr.io/prohand/gladys-synology:1.0.4`), starts it in a sandbox isolated from the core, and generates the integration's interface (devices, discovery and configuration).
+2. Click **Install**. Gladys pulls the Docker image (`ghcr.io/prohand/gladys-synology:2.3.0`), starts it in a sandbox isolated from the core, and generates the integration's interface (devices, discovery and configuration).
 3. Open the **Configuration** screen of the integration, fill in the settings, and save.
 4. You can also install it directly from its repository URL: [https://github.com/prohand/gladys-synology](https://github.com/prohand/gladys-synology).
 
-Synology DSM requires Gladys `>=4.86.0`. The catalog inside Gladys refreshes every hour, so a new version becomes available at most one hour after its release.
+Synology DSM requires Gladys `>=5.1.0`. The catalog inside Gladys refreshes every hour, so a new version becomes available at most one hour after its release.
 
 Not running Gladys yet? It is free and open source: [follow the installation guide](/docs/) to get started.
 
